@@ -1,6 +1,6 @@
 # Terraform
 
-## Whyy terrorform over other IaC tools?
+## Why terrorform over other IaC tools?
 
 - **Platform Agnostic**: Works with multiple cloud providers (AWS, Azure, GCP, etc.) and on-premises solutions.
 - **Higher abstraction**
