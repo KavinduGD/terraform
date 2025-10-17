@@ -89,6 +89,7 @@ output "instance_id" {
 ## Locals block
 
 - **Purpose: Defines local variables to simplify complex expressions and improve readability.**
+- **Just like variables that we define inside of programming functions.(not as parameters)**
 
 ```hclhcl
 locals {
