@@ -35,9 +35,8 @@ data "aws_iam_policy_document" "allow_public_read" {
 }
 
 resource "aws_s3_bucket_policy" "public_read_policy" {
-  bucket = aws_s3_bucket.s3_bucket.id
-  policy = data.aws_iam_policy_document.allow_public_read.json
-
+  bucket     = aws_s3_bucket.s3_bucket.id
+  policy     = data.aws_iam_policy_document.allow_public_read.json
   depends_on = [aws_s3_bucket_public_access_block.public_access]
 }
 
@@ -56,11 +55,11 @@ resource "aws_s3_bucket_website_configuration" "example" {
 
 # Upload index.html
 resource "aws_s3_object" "index_html" {
-  bucket = aws_s3_bucket.s3_bucket.id
-  key    = "index.html"
-  source = "index.html"
+  bucket       = aws_s3_bucket.s3_bucket.id
+  key          = "index.html"
+  source       = "index.html"
   content_type = "text/html"
-#   acl    = "public-read"
+  #   acl    = "public-read"
 }
 
 # Upload error.html (optional)
