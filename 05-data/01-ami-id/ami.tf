@@ -1,0 +1,35 @@
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+resource "aws_instance" "example" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+  associate_public_ip_address =  true
+
+  tags = {
+    Name = "my-instance"
+  }
+
+  root_block_device {
+    delete_on_termination = true
+    volume_type = "gp3"
+    volume_size =  10
+  }
+}
+
+output "ubuntu_ami_id" {
+  value = data.aws_ami.ubuntu.image_location
+}
