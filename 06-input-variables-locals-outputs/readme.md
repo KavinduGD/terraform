@@ -100,6 +100,23 @@ When to use map:
 - Input where keys change often
 - Flexible dictionaries
 
+## env variables
+
+- You can set input variable values using environment variables.
+
+- The environment variable name must be in the format `TF_VAR_<variable_name>`.
+
+- Terraform automatically picks up these environment variables when running commands.
+
+- This has higher precedence than default values but lower than `terraform.tfvars` , `.auto.tfvars`, and CLI `-var` options.
+
+Example:
+
+```bash
+export TF_VAR_instance_type="t2.micro"
+export TF_VAR_project_name="MyProject"
+```
+
 ## .tfvars files
 
 - A .tfvars file is where you store variable values for Terraform.
@@ -131,8 +148,52 @@ instance_type = "m5.large"
 project_name  = "ProdProject"
 ```
 
+terraform.tfvars automatically loads if present.
+
+You can create multiple .tfvars files for different environments (e.g., dev.tfvars, prod.tfvars). But they won't load automatically; you have to specify which one to use.
+
 To use a .tfvars file, run:
 
 ```bash
 terraform apply -var-file="dev.tfvars"
+```
+
+## .auto.tfvars files
+
+- Files ending with `.auto.tfvars` are automatically loaded by Terraform.
+- You don't need to specify them with `-var-file`; Terraform picks them up automatically.
+
+- Also .auto.tfvars files have higher precedence than terraform.tfvars.
+
+## CLI -var and -var-file options
+
+- You can pass variable values directly via the command line using the `-var` option.
+  Example:
+
+```bash
+terraform apply -var="instance_type=t2.micro" -var="project_name=MyProject"
+```
+
+- You can also specify a variable file using the `-var-file` option.
+  Example:
+
+```bash
+terraform apply -var-file="custom.tfvars"
+```
+
+- CLI options have the highest precedence, overriding all other methods of setting variable values.
+
+## Locals
+
+- Locals are named values that you can define within a module to simplify expressions and avoid repetition.
+
+- They are defined using the `locals` block and can be referenced throughout the module.
+
+Example:
+
+```hcl
+locals {
+  region_prefix = "us-west-"
+  full_region   = "${local.region_prefix}2"
+}
 ```
