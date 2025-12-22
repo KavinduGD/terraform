@@ -13,3 +13,4 @@
 | terraform show              | Provides human-readable output from a state or plan file                                                                       |
 | terraform state list        | Lists all resources in the state file, useful for managing and manipulating the state.                                         |
 | terraform destroy           | Destroys all resources tracked in the state file                                                                               |
+| terraform output            | Extracts the value of an output variable from the state file                                                                   |

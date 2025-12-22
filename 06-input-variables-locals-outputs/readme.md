@@ -197,3 +197,34 @@ locals {
   full_region   = "${local.region_prefix}2"
 }
 ```
+
+## Outputs
+
+- Display important information after infrastructure creation
+- Share values between modules
+- Expose data for external tools (CI/CD, scripts, monitoring, etc.)
+
+Example:
+
+```hcl
+output "instance_ip" {
+  value = aws_instance.my_instance.public_ip
+}
+```
+
+- `terraform output` command retrieves output values after applying the configuration.
+
+## Sensitive Outputs
+
+- Mark outputs as sensitive to prevent them from being displayed in the terminal or logs.
+  Example:
+
+```hcl
+output "s3_bucket_secret_key" {
+  value     = aws_s3_bucket.my_bucket.secret_key
+  sensitive = true
+}
+```
+
+- Sensitive outputs are hidden when you run `terraform output` unless you use the `-json` flag.
+- This helps protect sensitive information from being exposed inadvertently.
