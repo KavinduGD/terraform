@@ -33,12 +33,24 @@ output "hosts" {
 }
 ```
 
+### Result
+
+```json
+["host-cat", "host-dog", "host-rabbit"]
+```
+
 Example — include indexes:
 
 ```hcl
 output "indexed_hosts" {
     value = [for i, a in var.animals : "${i}-${a}"]
 }
+```
+
+### Result
+
+```json
+["0-cat", "1-dog", "2-rabbit"]
 ```
 
 ```hcl
