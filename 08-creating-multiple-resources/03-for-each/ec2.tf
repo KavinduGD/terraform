@@ -15,9 +15,7 @@ data "aws_ami" "ubuntu" {
 }
 
 data "aws_ami" "nginx" {
-
-
-filter {
+  filter {
     name   = "name"
     values = ["bitnami-nginx-1.29.4-r01-debian-12-amd64-f5774628-e459-457a-b058-3b513caefdee"]
   }
@@ -36,11 +34,15 @@ locals {
 }
 
 resource "aws_instance" "server" {
-  count = length(var.ec2_instance_list)
+  for_each = var.ec2_instance_map
 
-  ami           = local.amis[var.ec2_instance_list[count.index].ami]
-  instance_type = var.ec2_instance_list[count.index].instance_type
-  subnet_id     = aws_subnet.main[count.index % var.subnet_count].id
+  ami           = local.amis[each.value.ami]
+  instance_type = each.value.instance_type
+  subnet_id     = aws_subnet.main[each.value.subnet_name].id
+
+  tags = {
+    Name = "${each.key}-instance"
+  }
 }
 
 
