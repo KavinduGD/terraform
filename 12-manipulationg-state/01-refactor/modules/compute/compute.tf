@@ -11,14 +11,17 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = ["099720109477"] 
+  owners = ["099720109477"]
 }
 
-resource "aws_instance" "new" {
+
+
+resource "aws_instance" "this" {
+
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
 
   tags = {
-    Name = "HelloWorld"
+    Name = "instance"
   }
 }
